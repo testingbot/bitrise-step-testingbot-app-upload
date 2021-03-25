@@ -1,0 +1,85 @@
+#
+# A couple of useful guides & docs:
+#
+# - Main Bitrise CLI docs: https://github.com/bitrise-io/bitrise/tree/master/_docs
+# - Step Development Guideline: https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+# - Bitrise.yml format spec: https://github.com/bitrise-io/bitrise/blob/master/_docs/bitrise-yml-format-spec.md
+# - Bitrise docs: http://devcenter.bitrise.io/
+# - Bitrise CLI guides: http://devcenter.bitrise.io/bitrise-cli/
+
+title: |-
+  TestingBot App Upload
+summary: |
+  Uploads your APK or IPA to TestingBot for mobile app testing.
+description: |
+  Uploads your APK or IPA to TestingBot for mobile app testing. You can find more information on https://testingbot.com
+website: https://github.com/testingbot/bitrise-step-testingbot-app-upload
+source_code_url: https://github.com/testingbot/bitrise-step-testingbot-app-upload
+support_url: https://github.com/testingbot/bitrise-step-testingbot-app-upload/issues
+host_os_tags:
+  - osx-10.10
+  - ubuntu-16.04
+
+# If this step should be available only for certain project types
+# just uncomment this `project_type_tags` section and include all the
+# project types supported by the step. If the step can be used for all
+# project types then you can just remove this section.
+# If no `project_type_tags` specified (or specified as an empty array)
+# that means the step can be used for any project type.
+# You can find more information about project type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+#
+project_type_tags:
+  - ios
+  - android
+  - xamarin
+  - react-native
+  - cordova
+  - ionic
+  - flutter
+
+# Type tags are used for categorizing steps, for easier step discovery in Step Libraries.
+# You can find more information about type tags in the Step Development Guideline:
+# https://github.com/bitrise-io/bitrise/blob/master/_docs/step-development-guideline.md
+type_tags:
+  - deploy
+
+is_requires_admin_user: true
+is_always_run: false
+is_skippable: false
+run_if: ""
+
+deps:
+
+toolkit:
+  bash:
+    entry_file: step.sh
+
+
+inputs:
+  - apk_ipa_filepath: 
+    opts:
+      title: "Location of the IPA or APK"
+      summary: Location of the IPA or APK that you want to upload.
+      description: |
+        The app file you want to upload to TestingBot, usually $BITRISE\_APK\_PATH or $BITRISE\_IPA\_PATH.
+      is_expand: true
+      is_required: true
+  - testingbot_key:
+    opts:
+      title: "TestingBot Key"
+      summary: The key to authenticate with TestingBot.
+      description: |
+        You can find the key in the TestingBot member area.
+      is_expand: true
+      is_required: true
+      is_sensitive: true
+  - testingbot_secret:
+    opts:
+      title: "TestingBot Secret"
+      summary: The secret to authenticate with TestingBot.
+      description: |
+        You can find the secret in the TestingBot member area.
+      is_expand: true
+      is_required: true
+      is_sensitive: true
